@@ -57,4 +57,4 @@ chisqr :: [Float] -> [Float] -> Float
 chisqr os es = sum [((o-e)^2)/e | (o,e) <- zip os es]
 
 scalarproduct :: [Int] -> [Int] -> Int
-
+scalarproduct os es = sum [x*y | (x,y) <- zip os es]
