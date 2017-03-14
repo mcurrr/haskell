@@ -20,3 +20,25 @@ euclid a b | a == b    = a
                 where
                     x = abs (a - b)
                     y = min a b
+
+
+--7
+merge' :: Ord a => [a] -> [a] -> [a]
+merge' [] xs = xs
+merge' xs [] = xs
+merge' (x:xs) (y:ys) | x <= y    = x : merge' xs (y:ys)
+                     | otherwise = y : merge' (x:xs) ys
+
+--8
+msort :: Ord a => [a] -> [a]
+msort [] = []
+msort [x] = [x]
+msort xs = merge' (msort l) (msort r)
+            where
+                (l, r) = halve xs
+
+halve :: [a] -> ([a], [a])
+halve xs = (take h xs, drop h xs)
+            where 
+                h = length xs `div` 2
+
