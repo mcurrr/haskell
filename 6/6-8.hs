@@ -46,8 +46,23 @@ elem' _ [] = False
 elem' n (x:xs) | n == x    = True
               | otherwise = elem' n xs
 
+
 --7
 merge' :: Ord a => [a] -> [a] -> [a]
-merge' [] [] = []
-merge' (x:xs) (y:ys) | x <= y    = x : y : merge' xs ys
-                     | otherwise = y : x : merge' xs ys
+merge' [] xs = xs
+merge' xs [] = xs
+merge' (x:xs) (y:ys) | x <= y    = x : merge' xs (y:ys)
+                     | otherwise = y : merge' (x:xs) ys
+
+--8
+msort :: Ord a => [a] -> [a]
+msort [] = []
+msort [x] = [x]
+msort xs = merge' (msort l) (msort r)
+            where
+                (l, r) = halve xs
+
+halve :: [a] -> ([a], [a])
+halve xs = (take h xs, drop h xs)
+            where 
+                h = length xs `div` 2
