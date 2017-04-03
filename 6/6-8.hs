@@ -21,6 +21,31 @@ euclid a b | a == b    = a
                     x = abs (a - b)
                     y = min a b
 
+--6
+----a
+and' :: [Bool] -> Bool
+and' [True] = True
+and' (x:xs) | x == False = False
+            | otherwise  = and' xs
+--b
+concat' :: [[a]] -> [a]
+concat' [] = []
+concat' (x:xs) = x ++ concat' xs
+
+----c
+replicate' :: Int -> a -> [a]
+replicate' 0 _ = []
+replicate' n x = x : replicate (n-1) x
+-- ----d
+-- (!!) :: [a] -> Int -> a
+-- (!!) x:xs 0 = x
+-- (!!) x:xs n = (!!) xs (n-1)
+----e
+elem' :: Eq a => a -> [a] -> Bool
+elem' _ [] = False
+elem' n (x:xs) | n == x    = True
+              | otherwise = elem' n xs
+
 
 --7
 merge' :: Ord a => [a] -> [a] -> [a]
@@ -41,4 +66,3 @@ halve :: [a] -> ([a], [a])
 halve xs = (take h xs, drop h xs)
             where 
                 h = length xs `div` 2
-
