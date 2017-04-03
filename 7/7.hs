@@ -13,8 +13,34 @@ snoc x xs = xs ++ [x]
 -- map' f (filter' p x)
 
 --2
--- all' :: (a -> Bool) -> [Bool] -> Bool
--- all' foldr (\xs x ) []
+
+--a
+all' :: (a -> Bool) -> [a] -> Bool
+all' f = and . map f
+
+-- all'' _ [] = True
+-- all'' f (x:xs) | f x = all'' f xs
+--                | otherwise = False
+
+--b
+any' :: (a -> Bool) -> [a] -> Bool
+any' f = or . map f
+
+-- any'' _ [] = False
+-- any'' f (x:xs) | f x = True
+--                | otherwise = any'' f xs
+
+--c
+takeWhile' :: (a -> Bool) -> [a] -> [a]
+takeWhile' _ [] = []
+takeWhile' f (x:xs) | f x       = x : takeWhile' f xs
+                    | otherwise = []
+
+--d
+dropWhile' :: (a -> Bool) -> [a] -> [a]
+dropWhile' _ [] = []
+dropWhile' f (x:xs) | f x       = dropWhile' f xs
+                    | otherwise = x:xs
 
 --3
 map' :: (a -> b) -> [a] -> [b]
@@ -25,6 +51,6 @@ filter' p = foldr (\x xs -> if p x then x : xs else xs) []
 
 --4
 dec2int :: [Int] -> Int
-dec2int = foldl (\acc x -> x + acc) 0
+dec2int = foldl (\acc x -> acc*10 + x) 0
 
 --5
